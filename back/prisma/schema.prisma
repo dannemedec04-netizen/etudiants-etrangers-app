@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  country   String?
+  createdAt DateTime @default(now())
+
+  checklistItems ChecklistItem[]
+}
+
+// Volet educatif : formations proposees par les etablissements
+model School {
+  id        String     @id @default(uuid())
+  name      String
+  city      String
+  createdAt DateTime   @default(now())
+
+  formations Formation[]
+}
+
+model Formation {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  type        String // ex: alternance, stage, initiale
+  field       String // ex: Informatique, Commerce, Droit
+  school      School   @relation(fields: [schoolId], references: [id])
+  schoolId    String
+  createdAt   DateTime @default(now())
+}
+
+// Offres d'entreprises (stage / alternance)
+model JobOffer {
+  id          String   @id @default(uuid())
+  title       String
+  company     String
+  type        String // alternance, stage
+  field       String // ex: Informatique, Commerce, Droit
+  location    String?
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+// Aides disponibles (CAF, bourses, etc.)
+model Aid {
+  id          String   @id @default(uuid())
+  name        String // ex: "APL", "Bourse CROUS"
+  provider    String // ex: "CAF", "CROUS"
+  description String?
+  eligibility String? // conditions resumees
+  amount      String? // texte libre (montants variables)
+  url         String? // lien officiel pour la demarche
+  createdAt   DateTime @default(now())
+}
+
+// Volet administratif : checklist personnalisee par utilisateur
+model ChecklistItem {
+  id          String   @id @default(uuid())
+  label       String
+  description String?
+  done        Boolean  @default(false)
+  category    String // titre_de_sejour, aides, droit_au_travail
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  createdAt   DateTime @default(now())
+}
