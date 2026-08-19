@@ -62,6 +62,7 @@ model Aid {
   id          String   @id @default(uuid())
   name        String // ex: "APL", "Bourse CROUS"
   provider    String // ex: "CAF", "CROUS"
+  category    String // ex: logement, bourse, sante, transport
   description String?
   eligibility String? // conditions resumees
   amount      String? // texte libre (montants variables)

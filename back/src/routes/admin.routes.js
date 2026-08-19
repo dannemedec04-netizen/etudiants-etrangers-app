@@ -18,16 +18,16 @@ router.get("/checklist/:userId", async (req, res) => {
 // POST /api/admin/checklist/:userId
 router.post("/checklist/:userId", async (req, res) => {
   const { userId } = req.params;
-  const { label, category } = req.body;
+  const { label, description, category } = req.body;
 
   const item = await prisma.checklistItem.create({
-    data: { label, category, userId },
+    data: { label, description, category, userId },
   });
 
   res.status(201).json(item);
 });
 
-// PATCH /api/admin/checklist/item/:id
+// PATCH /api/admin/checklist/item/:id  { done: true|false }
 router.patch("/checklist/item/:id", async (req, res) => {
   const { id } = req.params;
   const { done } = req.body;
@@ -38,6 +38,18 @@ router.patch("/checklist/item/:id", async (req, res) => {
   });
 
   res.json(item);
+});
+
+// GET /api/admin/aids?category=logement
+router.get("/aids", async (req, res) => {
+  const { category } = req.query;
+
+  const aids = await prisma.aid.findMany({
+    where: category ? { category } : undefined,
+    orderBy: { name: "asc" },
+  });
+
+  res.json(aids);
 });
 
 module.exports = router;

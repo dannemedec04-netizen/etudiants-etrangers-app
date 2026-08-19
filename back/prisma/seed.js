@@ -2,6 +2,9 @@ const prisma = require("../src/prisma");
 
 async function main() {
   // Ordre de suppression respectant les contraintes de cle etrangere
+  await prisma.checklistItem.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.aid.deleteMany();
   await prisma.formation.deleteMany();
   await prisma.jobOffer.deleteMany();
   await prisma.school.deleteMany();
@@ -102,7 +105,82 @@ async function main() {
     ],
   });
 
-  console.log("Seed termine : 3 ecoles, 6 formations, 4 offres.");
+  await prisma.aid.createMany({
+    data: [
+      {
+        name: "APL - Aide Personnalisee au Logement",
+        provider: "CAF",
+        category: "logement",
+        description: "Aide au paiement du loyer, versee chaque mois sous conditions de ressources.",
+        eligibility: "Etudiant locataire, ressources sous un certain plafond.",
+        amount: "Variable selon le loyer et les ressources",
+        url: "https://www.caf.fr",
+      },
+      {
+        name: "Bourse CROUS sur criteres sociaux",
+        provider: "CROUS",
+        category: "bourse",
+        description: "Bourse annuelle versee en 10 mensualites selon la situation familiale et financiere.",
+        eligibility: "Etudiant inscrit en formation initiale, conditions de ressources du foyer.",
+        amount: "De 1454 a 6335 euros par an",
+        url: "https://www.etudiant.gouv.fr",
+      },
+      {
+        name: "Complementaire sante solidaire",
+        provider: "Assurance Maladie",
+        category: "sante",
+        description: "Complementaire sante gratuite ou a faible cout pour les revenus modestes.",
+        eligibility: "Residence stable en France, conditions de ressources.",
+        amount: "Gratuite ou jusqu'a 1 euro par jour selon l'age",
+        url: "https://www.ameli.fr",
+      },
+      {
+        name: "Aide Mobili-Jeune",
+        provider: "Action Logement",
+        category: "logement",
+        description: "Aide au financement du loyer pour les alternants de moins de 30 ans.",
+        eligibility: "Etre en contrat d'alternance, avoir moins de 30 ans.",
+        amount: "Jusqu'a 100 euros par mois",
+        url: "https://www.actionlogement.fr",
+      },
+    ],
+  });
+
+  const demoUser = await prisma.user.create({
+    data: {
+      email: "demo.etudiant@example.com",
+      password: "changeme",
+      firstName: "Amara",
+      lastName: "Diallo",
+      country: "Senegal",
+    },
+  });
+
+  await prisma.checklistItem.createMany({
+    data: [
+      {
+        label: "Deposer la demande de titre de sejour",
+        description: "Prendre rendez-vous en prefecture et preparer les justificatifs de domicile et de ressources.",
+        category: "titre_de_sejour",
+        userId: demoUser.id,
+      },
+      {
+        label: "Faire la demande d'APL",
+        description: "Demande a realiser en ligne sur le site de la CAF une fois le bail signe.",
+        category: "aides",
+        done: true,
+        userId: demoUser.id,
+      },
+      {
+        label: "Verifier son droit au travail etudiant",
+        description: "Le nombre d'heures autorisees depend du statut et du type de titre de sejour.",
+        category: "droit_au_travail",
+        userId: demoUser.id,
+      },
+    ],
+  });
+
+  console.log("Seed termine : 3 ecoles, 6 formations, 4 offres, 4 aides, 1 utilisateur demo avec 3 etapes de checklist.");
 }
 
 main()
