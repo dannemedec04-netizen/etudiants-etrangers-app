@@ -1,0 +1,32 @@
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.home-card {
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  background: var(--bg-alt);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.home-card:hover {
+  border-color: var(--accent-border);
+  box-shadow: var(--shadow);
+}
+
+.home-card h3 {
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.home-card p {
+  margin: 0;
+  font-size: 14px;
+}
