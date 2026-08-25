@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import {
-  HeroIllustration,
   IconAid,
   IconBriefcase,
   IconChat,
   IconChecklist,
   IconGraduationCap,
 } from "../components/Icons";
+import heroPhoto from "../assets/hero-students.jpg";
 import "./Home.css";
 
 const CARDS = [
@@ -61,7 +61,13 @@ export default function Home() {
           </p>
           <Link to="/formations" className="btn">Trouver une formation</Link>
         </div>
-        <HeroIllustration className="hero-illustration" aria-hidden="true" />
+        <div className="hero-photo-wrap">
+          <img
+            src={heroPhoto}
+            alt="Groupe d'étudiants échangeant sur un campus"
+            className="hero-photo"
+          />
+        </div>
       </section>
 
       <div className="home-grid">
