@@ -1,7 +1,8 @@
 .topbar {
-  border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--bg) 85%, transparent);
-  backdrop-filter: blur(8px);
+  --nav-bg: #7c3aed;
+  --nav-bg-strong: #6d28d9;
+  background: var(--nav-bg);
+  box-shadow: 0 2px 10px rgba(24, 19, 43, 0.18);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -15,7 +16,7 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .brand {
@@ -25,38 +26,55 @@
   font-family: var(--display);
   font-weight: 700;
   font-size: 16.5px;
-  color: var(--text-h);
+  color: #fff;
   text-decoration: none;
 }
 
-.brand-mark {
-  width: 26px;
-  height: 26px;
+.brand-mark-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
   flex-shrink: 0;
+}
+
+.brand-mark {
+  width: 20px;
+  height: 20px;
 }
 
 .nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: var(--space-1);
 }
 
 .nav-link {
-  padding: 7px 13px;
+  padding: 8px 16px;
   border-radius: var(--radius-sm);
-  color: var(--text);
+  color: rgba(255, 255, 255, 0.82);
   text-decoration: none;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   transition: background-color 0.15s, color 0.15s;
 }
 
 .nav-link:hover {
-  background: var(--bg-alt);
-  color: var(--text-h);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
 }
 
 .nav-link.active {
-  color: var(--accent-strong);
-  background: var(--accent-bg);
+  color: #fff;
+  background: var(--nav-bg-strong);
+  box-shadow: inset 0 -2px 0 #fff;
+}
+
+.brand:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }

@@ -16,7 +16,9 @@ export default function Layout() {
       <header className="topbar">
         <div className="topbar-inner">
           <NavLink to="/" className="brand" end>
-            <img src="/favicon.svg" alt="" className="brand-mark" />
+            <span className="brand-mark-wrap">
+              <img src="/favicon.svg" alt="" className="brand-mark" />
+            </span>
             Étudiants Étrangers
           </NavLink>
           <nav className="nav">
