@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getFormations } from "../api/education";
 
-const FIELDS = ["Informatique", "Commerce", "Droit"];
+const FIELDS = ["Informatique", "Commerce", "Droit", "Santé"];
 const TYPES = [
   { value: "initiale", label: "Formation initiale" },
   { value: "alternance", label: "Alternance" },
