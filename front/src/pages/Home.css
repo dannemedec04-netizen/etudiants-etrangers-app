@@ -1,32 +1,94 @@
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.hero-text {
+  max-width: 480px;
+}
+
+.hero-text .subtitle {
+  margin-bottom: var(--space-5);
+}
+
+.hero-illustration {
+  width: 260px;
+  height: 228px;
+  flex-shrink: 0;
+}
+
 .home-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
-  margin-top: 8px;
+  gap: var(--space-4);
 }
 
 .home-card {
   display: block;
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
   text-decoration: none;
   color: inherit;
   background: var(--bg-alt);
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
 }
 
 .home-card:hover {
   border-color: var(--accent-border);
   box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.home-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+}
+
+.home-card-icon.tint-violet {
+  background: var(--accent-bg);
+  color: var(--accent-strong);
+}
+
+.home-card-icon.tint-blue {
+  background: var(--accent-2-bg);
+  color: var(--accent-2);
 }
 
 .home-card h3 {
-  color: var(--accent);
-  margin-bottom: 6px;
+  margin-bottom: var(--space-1);
 }
 
 .home-card p {
   margin: 0;
   font-size: 14px;
+}
+
+@media (max-width: 720px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-text {
+    max-width: none;
+  }
+
+  .hero-text .subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-illustration {
+    width: 200px;
+    height: 175px;
+  }
 }

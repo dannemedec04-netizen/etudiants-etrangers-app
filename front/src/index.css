@@ -1,22 +1,48 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --bg-alt: #f9f8fc;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --danger: #d1373f;
-  --success: #1f9d55;
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Brand palette — anchored on the violet/sky mark in the favicon */
+  --accent: #7c3aed;
+  --accent-strong: #6d28d9;
+  --accent-bg: rgba(124, 58, 237, 0.09);
+  --accent-border: rgba(124, 58, 237, 0.35);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --accent-2: #0ea5e9;
+  --accent-2-bg: rgba(14, 165, 233, 0.1);
+
+  --text: #5c5870;
+  --text-h: #18132b;
+  --bg: #fff;
+  --bg-alt: #f7f6fb;
+  --bg-raised: #ffffff;
+  --border: #e6e3ee;
+
+  --danger: #d1373f;
+  --danger-bg: rgba(209, 55, 63, 0.1);
+  --success: #1f9d55;
+  --success-bg: rgba(31, 157, 85, 0.1);
+
+  --shadow-sm: 0 1px 2px rgba(24, 19, 43, 0.06);
+  --shadow:
+    0 10px 15px -3px rgba(24, 19, 43, 0.08), 0 4px 6px -2px rgba(24, 19, 43, 0.04);
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --display: 'Sora', var(--sans);
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 16px/145% var(--sans);
+  font: 16px/1.6 var(--sans);
   color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
@@ -28,19 +54,29 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --bg-alt: #1c1d24;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
+    --accent: #a78bfa;
+    --accent-strong: #c4b5fd;
+    --accent-bg: rgba(167, 139, 250, 0.16);
+    --accent-border: rgba(167, 139, 250, 0.4);
+
+    --accent-2: #38bdf8;
+    --accent-2-bg: rgba(56, 189, 248, 0.14);
+
+    --text: #a8a4b8;
+    --text-h: #f3f1f9;
+    --bg: #131019;
+    --bg-alt: #1a1624;
+    --bg-raised: #1e192a;
+    --border: #322c40;
+
     --danger: #f27782;
+    --danger-bg: rgba(242, 119, 130, 0.12);
     --success: #4ade80;
+    --success-bg: rgba(74, 222, 128, 0.12);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+      0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.25);
   }
 }
 
@@ -59,19 +95,21 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: var(--sans);
-  font-weight: 600;
+  font-family: var(--display);
+  font-weight: 700;
   color: var(--text-h);
-  margin: 0 0 8px;
+  line-height: 1.2;
+  margin: 0 0 var(--space-2);
 }
 
 h1 {
-  font-size: 32px;
-  letter-spacing: -0.4px;
+  font-size: 38px;
+  letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: 22px;
+  font-size: 23px;
+  letter-spacing: -0.01em;
 }
 
 h3 {
@@ -79,7 +117,7 @@ h3 {
 }
 
 p {
-  margin: 0 0 12px;
+  margin: 0 0 var(--space-3);
 }
 
 a {
@@ -95,59 +133,86 @@ button, input, select, textarea {
   width: 100%;
   max-width: 1080px;
   margin: 0 auto;
-  padding: 32px 24px 64px;
+  padding: var(--space-6) var(--space-5) var(--space-8);
   flex: 1;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-2);
 }
 
 .subtitle {
   color: var(--text);
   max-width: 640px;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-6);
+  font-size: 16px;
 }
 
 .card {
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background: var(--bg-alt);
-  padding: 20px;
+  padding: var(--space-5);
 }
 
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
 }
 
 .filters input,
 .filters select {
-  padding: 9px 12px;
-  border-radius: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text-h);
-  min-width: 160px;
+  min-width: 170px;
+  transition: border-color 0.15s;
+}
+
+.filters input:hover,
+.filters select:hover {
+  border-color: var(--accent-border);
 }
 
 .filters input:focus,
 .filters select:focus,
-button:focus-visible {
+button:focus-visible,
+a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 .btn {
-  padding: 9px 16px;
-  border-radius: 8px;
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
   border: 1px solid transparent;
   background: var(--accent);
   color: #fff;
+  text-decoration: none;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 14.5px;
+  transition: background-color 0.15s, transform 0.1s;
 }
 
 .btn:hover {
-  opacity: 0.9;
+  background: var(--accent-strong);
+}
+
+.btn:active {
+  transform: translateY(1px);
 }
 
 .btn:disabled {
@@ -161,36 +226,51 @@ button:focus-visible {
   color: var(--text-h);
 }
 
+.btn-outline:hover {
+  background: var(--bg-alt);
+  border-color: var(--accent-border);
+}
+
 .results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  gap: var(--space-4);
+}
+
+.results-grid .card {
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.results-grid .card:hover {
+  border-color: var(--accent-border);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
 }
 
 .tag {
   display: inline-block;
   font-size: 12px;
-  font-weight: 500;
-  padding: 3px 9px;
+  font-weight: 600;
+  padding: 3px 10px;
   border-radius: 999px;
   background: var(--accent-bg);
-  color: var(--accent);
-  margin: 0 6px 6px 0;
+  color: var(--accent-strong);
+  margin: 0 var(--space-2) var(--space-2) 0;
 }
 
 .empty-state {
   color: var(--text);
-  padding: 24px;
+  padding: var(--space-6);
   text-align: center;
   border: 1px dashed var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .error-banner {
-  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  background: var(--danger-bg);
   border: 1px solid var(--danger);
   color: var(--danger);
-  padding: 10px 14px;
-  border-radius: 8px;
-  margin-bottom: 16px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
 }

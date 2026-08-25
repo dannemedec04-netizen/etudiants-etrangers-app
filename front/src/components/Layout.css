@@ -1,6 +1,7 @@
 .topbar {
   border-bottom: 1px solid var(--border);
-  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(8px);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -9,41 +10,53 @@
 .topbar-inner {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 14px 24px;
+  padding: var(--space-3) var(--space-5);
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--display);
   font-weight: 700;
-  font-size: 17px;
+  font-size: 16.5px;
   color: var(--text-h);
   text-decoration: none;
+}
+
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
 }
 
 .nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 2px;
 }
 
 .nav-link {
-  padding: 6px 12px;
-  border-radius: 8px;
+  padding: 7px 13px;
+  border-radius: var(--radius-sm);
   color: var(--text);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
+  transition: background-color 0.15s, color 0.15s;
 }
 
 .nav-link:hover {
   background: var(--bg-alt);
+  color: var(--text-h);
 }
 
 .nav-link.active {
-  color: var(--accent);
+  color: var(--accent-strong);
   background: var(--accent-bg);
 }
