@@ -10,23 +10,25 @@ async function main() {
   await prisma.school.deleteMany();
 
   const schoolDefs = [
-    { key: "saclay", name: "Universite Paris-Saclay", city: "Paris" },
-    { key: "iutLyon", name: "IUT de Lyon 1", city: "Lyon" },
-    { key: "essca", name: "ESSCA School of Management", city: "Angers" },
-    { key: "toulouse", name: "Universite Toulouse Capitole", city: "Toulouse" },
-    { key: "iutLille", name: "IUT de Lille", city: "Lille" },
-    { key: "emLyon", name: "EM Lyon Business School", city: "Lyon" },
-    { key: "bordeaux", name: "Universite de Bordeaux", city: "Bordeaux" },
-    { key: "nantes", name: "Universite de Nantes", city: "Nantes" },
-    { key: "sciencesPoStrasbourg", name: "Sciences Po Strasbourg", city: "Strasbourg" },
-    { key: "grenobleInp", name: "Institut Polytechnique de Grenoble", city: "Grenoble" },
-    { key: "montpellier", name: "Universite de Montpellier", city: "Montpellier" },
-    { key: "iutMarseille", name: "IUT d'Aix-Marseille", city: "Marseille" },
+    { key: "saclay", name: "Universite Paris-Saclay", city: "Paris", website: "https://www.universite-paris-saclay.fr" },
+    { key: "iutLyon", name: "IUT de Lyon 1", city: "Lyon", website: "https://iut.univ-lyon1.fr" },
+    { key: "essca", name: "ESSCA School of Management", city: "Angers", website: "https://www.essca.fr" },
+    { key: "toulouse", name: "Universite Toulouse Capitole", city: "Toulouse", website: "https://ut-capitole.fr" },
+    { key: "iutLille", name: "IUT de Lille", city: "Lille", website: "https://iutlille.univ-lille.fr" },
+    { key: "emLyon", name: "EM Lyon Business School", city: "Lyon", website: "https://www.em-lyon.com" },
+    { key: "bordeaux", name: "Universite de Bordeaux", city: "Bordeaux", website: "https://www.u-bordeaux.fr" },
+    { key: "nantes", name: "Universite de Nantes", city: "Nantes", website: "https://www.univ-nantes.fr" },
+    { key: "sciencesPoStrasbourg", name: "Sciences Po Strasbourg", city: "Strasbourg", website: "https://www.sciencespo-strasbourg.fr" },
+    { key: "grenobleInp", name: "Institut Polytechnique de Grenoble", city: "Grenoble", website: "https://www.grenoble-inp.fr" },
+    { key: "montpellier", name: "Universite de Montpellier", city: "Montpellier", website: "https://www.umontpellier.fr" },
+    { key: "iutMarseille", name: "IUT d'Aix-Marseille", city: "Marseille", website: "https://iut.univ-amu.fr" },
   ];
 
   const schools = {};
   for (const def of schoolDefs) {
-    schools[def.key] = await prisma.school.create({ data: { name: def.name, city: def.city } });
+    schools[def.key] = await prisma.school.create({
+      data: { name: def.name, city: def.city, website: def.website },
+    });
   }
 
   await prisma.formation.createMany({
@@ -269,6 +271,7 @@ async function main() {
         field: "Informatique",
         location: "Lyon",
         description: "Alternance 12 mois sur une stack Node.js / React.",
+        url: "https://www.techcorp-recrute.fr",
       },
       {
         title: "Data Analyst",
@@ -277,6 +280,7 @@ async function main() {
         field: "Informatique",
         location: "Roubaix",
         description: "Alternance au sein de l'equipe data, analyse de la performance produit.",
+        url: "https://careers.ovhcloud.com",
       },
       {
         title: "Assistant(e) Commercial(e)",
@@ -285,6 +289,7 @@ async function main() {
         field: "Commerce",
         location: "Paris",
         description: "Stage de 6 mois au sein de l'equipe commerciale grands comptes.",
+        url: "https://www.carrefour.fr/recrutement",
       },
       {
         title: "Juriste Junior - Droit des Affaires",
@@ -293,6 +298,7 @@ async function main() {
         field: "Droit",
         location: "Paris",
         description: "Stage de 4 mois, redaction et suivi de dossiers en droit des affaires.",
+        url: "https://www.cabinet-dupont-associes.fr",
       },
       {
         title: "Ingenieur DevOps en alternance",
@@ -301,6 +307,7 @@ async function main() {
         field: "Informatique",
         location: "Toulouse",
         description: "Alternance 12 mois, automatisation des deploiements et supervision d'infrastructure.",
+        url: "https://www.capgemini.com/fr-fr/carrieres/",
       },
       {
         title: "Charge(e) de Recrutement en alternance",
@@ -309,6 +316,7 @@ async function main() {
         field: "Commerce",
         location: "Paris",
         description: "Alternance au sein de l'equipe RH, sourcing et suivi des candidatures.",
+        url: "https://careers.danone.com",
       },
       {
         title: "Infirmier(e) Diplome(e) d'Etat",
@@ -317,6 +325,7 @@ async function main() {
         field: "Santé",
         location: "Bordeaux",
         description: "Stage clinique de fin d'etudes en service de medecine polyvalente.",
+        url: "https://www.chu-bordeaux.fr",
       },
       {
         title: "Aide-Soignant(e) en alternance",
@@ -325,6 +334,7 @@ async function main() {
         field: "Santé",
         location: "Nantes",
         description: "Alternance en accompagnement des personnes agees, soins d'hygiene et de confort.",
+        url: "https://www.ehpad-lesjardinsdenantes.fr",
       },
       {
         title: "Charge(e) d'Affaires Juridiques",
@@ -333,6 +343,7 @@ async function main() {
         field: "Droit",
         location: "Lyon",
         description: "Stage de 6 mois au sein de la direction juridique, suivi de contrats et conformite.",
+        url: "https://carrieres.societegenerale.com",
       },
       {
         title: "Developpeur Mobile en alternance",
@@ -341,6 +352,7 @@ async function main() {
         field: "Informatique",
         location: "Paris",
         description: "Alternance 12 mois sur les applications mobiles iOS et Android.",
+        url: "https://careers.doctolib.com",
       },
       {
         title: "Technicien(ne) Support IT en alternance",
@@ -349,6 +361,7 @@ async function main() {
         field: "Informatique",
         location: "Lille",
         description: "Alternance au sein du support informatique interne, gestion du parc et des incidents.",
+        url: "https://recrutement.decathlon.fr",
       },
     ],
   });
@@ -482,6 +495,7 @@ async function main() {
         label: "Deposer la demande de titre de sejour",
         description: "Prendre rendez-vous en prefecture et preparer les justificatifs de domicile et de ressources.",
         category: "titre_de_sejour",
+        url: "https://administration-etrangers-en-france.interieur.gouv.fr",
         userId: demoUser.id,
       },
       {

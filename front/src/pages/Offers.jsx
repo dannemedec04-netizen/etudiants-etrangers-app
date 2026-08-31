@@ -60,6 +60,13 @@ export default function Offers() {
             <h3>{offer.title}</h3>
             <p><strong>{offer.company}</strong>{offer.location ? ` — ${offer.location}` : ""}</p>
             <p>{offer.description}</p>
+            {offer.url && (
+              <p>
+                <a href={offer.url} target="_blank" rel="noreferrer">
+                  Voir l'offre
+                </a>
+              </p>
+            )}
           </article>
         ))}
       </div>

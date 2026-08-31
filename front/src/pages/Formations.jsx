@@ -73,6 +73,13 @@ export default function Formations() {
             <h3>{formation.title}</h3>
             <p>{formation.description}</p>
             <p><strong>{formation.school?.name}</strong> — {formation.school?.city}</p>
+            {formation.school?.website && (
+              <p>
+                <a href={formation.school.website} target="_blank" rel="noreferrer">
+                  Site de l'école
+                </a>
+              </p>
+            )}
           </article>
         ))}
       </div>

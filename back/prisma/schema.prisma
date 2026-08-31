@@ -29,6 +29,7 @@ model School {
   id        String     @id @default(uuid())
   name      String
   city      String
+  website   String? // site officiel de l'etablissement
   createdAt DateTime   @default(now())
 
   formations Formation[]
@@ -54,6 +55,7 @@ model JobOffer {
   field       String // ex: Informatique, Commerce, Droit
   location    String?
   description String?
+  url         String? // lien vers l'offre ou la page recrutement de l'entreprise
   createdAt   DateTime @default(now())
 }
 
@@ -77,6 +79,7 @@ model ChecklistItem {
   description String?
   done        Boolean  @default(false)
   category    String // titre_de_sejour, aides, droit_au_travail
+  url         String? // lien vers le site officiel de la demarche
   user        User     @relation(fields: [userId], references: [id])
   userId      String
   createdAt   DateTime @default(now())

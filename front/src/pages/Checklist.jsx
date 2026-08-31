@@ -128,6 +128,13 @@ export default function Checklist() {
                     <div>
                       <strong>{item.label}</strong>
                       {item.description && <p>{item.description}</p>}
+                      {item.url && (
+                        <p>
+                          <a href={item.url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+                            Site officiel de la démarche
+                          </a>
+                        </p>
+                      )}
                     </div>
                   </label>
                 </li>
