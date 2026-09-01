@@ -20,7 +20,7 @@ const CARDS = [
   {
     to: "/offres",
     title: "Offres d'entreprises",
-    description: "Parcourez les offres de stage et d'alternance disponibles par filière.",
+    description: "Générez des recherches de stage et d'alternance sur les meilleures plateformes.",
     icon: IconBriefcase,
     tint: "blue",
   },

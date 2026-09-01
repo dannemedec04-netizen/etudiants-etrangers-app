@@ -247,6 +247,22 @@ a:focus-visible {
   transform: translateY(-2px);
 }
 
+.platform-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.platform-card h3 {
+  color: var(--accent-strong);
+}
+
+.platform-note {
+  font-size: 13px;
+  color: var(--text);
+  font-style: italic;
+}
+
 .tag {
   display: inline-block;
   font-size: 12px;

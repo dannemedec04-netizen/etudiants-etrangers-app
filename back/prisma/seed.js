@@ -6,7 +6,6 @@ async function main() {
   await prisma.user.deleteMany();
   await prisma.aid.deleteMany();
   await prisma.formation.deleteMany();
-  await prisma.jobOffer.deleteMany();
   await prisma.school.deleteMany();
 
   const schoolDefs = [
@@ -262,110 +261,6 @@ async function main() {
     ],
   });
 
-  await prisma.jobOffer.createMany({
-    data: [
-      {
-        title: "Developpeur Full-Stack Junior",
-        company: "TechCorp",
-        type: "alternance",
-        field: "Informatique",
-        location: "Lyon",
-        description: "Alternance 12 mois sur une stack Node.js / React.",
-        url: "https://www.techcorp-recrute.fr",
-      },
-      {
-        title: "Data Analyst",
-        company: "OVHcloud",
-        type: "alternance",
-        field: "Informatique",
-        location: "Roubaix",
-        description: "Alternance au sein de l'equipe data, analyse de la performance produit.",
-        url: "https://careers.ovhcloud.com",
-      },
-      {
-        title: "Assistant(e) Commercial(e)",
-        company: "Groupe Carrefour",
-        type: "stage",
-        field: "Commerce",
-        location: "Paris",
-        description: "Stage de 6 mois au sein de l'equipe commerciale grands comptes.",
-        url: "https://www.carrefour.fr/recrutement",
-      },
-      {
-        title: "Juriste Junior - Droit des Affaires",
-        company: "Cabinet Dupont & Associes",
-        type: "stage",
-        field: "Droit",
-        location: "Paris",
-        description: "Stage de 4 mois, redaction et suivi de dossiers en droit des affaires.",
-        url: "https://www.cabinet-dupont-associes.fr",
-      },
-      {
-        title: "Ingenieur DevOps en alternance",
-        company: "Capgemini",
-        type: "alternance",
-        field: "Informatique",
-        location: "Toulouse",
-        description: "Alternance 12 mois, automatisation des deploiements et supervision d'infrastructure.",
-        url: "https://www.capgemini.com/fr-fr/carrieres/",
-      },
-      {
-        title: "Charge(e) de Recrutement en alternance",
-        company: "Groupe Danone",
-        type: "alternance",
-        field: "Commerce",
-        location: "Paris",
-        description: "Alternance au sein de l'equipe RH, sourcing et suivi des candidatures.",
-        url: "https://careers.danone.com",
-      },
-      {
-        title: "Infirmier(e) Diplome(e) d'Etat",
-        company: "CHU de Bordeaux",
-        type: "stage",
-        field: "Santé",
-        location: "Bordeaux",
-        description: "Stage clinique de fin d'etudes en service de medecine polyvalente.",
-        url: "https://www.chu-bordeaux.fr",
-      },
-      {
-        title: "Aide-Soignant(e) en alternance",
-        company: "EHPAD Les Jardins de Nantes",
-        type: "alternance",
-        field: "Santé",
-        location: "Nantes",
-        description: "Alternance en accompagnement des personnes agees, soins d'hygiene et de confort.",
-        url: "https://www.ehpad-lesjardinsdenantes.fr",
-      },
-      {
-        title: "Charge(e) d'Affaires Juridiques",
-        company: "Societe Generale",
-        type: "stage",
-        field: "Droit",
-        location: "Lyon",
-        description: "Stage de 6 mois au sein de la direction juridique, suivi de contrats et conformite.",
-        url: "https://carrieres.societegenerale.com",
-      },
-      {
-        title: "Developpeur Mobile en alternance",
-        company: "Doctolib",
-        type: "alternance",
-        field: "Informatique",
-        location: "Paris",
-        description: "Alternance 12 mois sur les applications mobiles iOS et Android.",
-        url: "https://careers.doctolib.com",
-      },
-      {
-        title: "Technicien(ne) Support IT en alternance",
-        company: "Decathlon",
-        type: "alternance",
-        field: "Informatique",
-        location: "Lille",
-        description: "Alternance au sein du support informatique interne, gestion du parc et des incidents.",
-        url: "https://recrutement.decathlon.fr",
-      },
-    ],
-  });
-
   await prisma.aid.createMany({
     data: [
       {
@@ -515,7 +410,7 @@ async function main() {
   });
 
   console.log(
-    `Seed termine : ${schoolDefs.length} ecoles, 29 formations, 11 offres, 12 aides, 1 utilisateur demo avec 3 etapes de checklist.`
+    `Seed termine : ${schoolDefs.length} ecoles, 29 formations, 12 aides, 1 utilisateur demo avec 3 etapes de checklist.`
   );
 }
 

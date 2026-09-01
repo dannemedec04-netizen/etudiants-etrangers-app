@@ -46,19 +46,6 @@ model Formation {
   createdAt   DateTime @default(now())
 }
 
-// Offres d'entreprises (stage / alternance)
-model JobOffer {
-  id          String   @id @default(uuid())
-  title       String
-  company     String
-  type        String // alternance, stage
-  field       String // ex: Informatique, Commerce, Droit
-  location    String?
-  description String?
-  url         String? // lien vers l'offre ou la page recrutement de l'entreprise
-  createdAt   DateTime @default(now())
-}
-
 // Aides disponibles (CAF, bourses, etc.)
 model Aid {
   id          String   @id @default(uuid())

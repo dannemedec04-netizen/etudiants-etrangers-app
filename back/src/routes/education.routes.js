@@ -20,19 +20,4 @@ router.get("/formations", async (req, res) => {
   res.json(formations);
 });
 
-// GET /api/education/offers?field=Informatique&type=stage
-router.get("/offers", async (req, res) => {
-  const { field, type } = req.query;
-
-  const offers = await prisma.jobOffer.findMany({
-    where: {
-      ...(field ? { field } : {}),
-      ...(type ? { type } : {}),
-    },
-    orderBy: { createdAt: "desc" },
-  });
-
-  res.json(offers);
-});
-
 module.exports = router;

@@ -11,7 +11,3 @@ function toQuery(params) {
 export function getFormations({ field, city, type } = {}) {
   return get(`/education/formations${toQuery({ field, city, type })}`);
 }
-
-export function getJobOffers({ field, type } = {}) {
-  return get(`/education/offers${toQuery({ field, type })}`);
-}
