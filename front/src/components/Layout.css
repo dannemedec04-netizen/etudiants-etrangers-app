@@ -78,3 +78,54 @@
   outline: 2px solid #fff;
   outline-offset: 2px;
 }
+
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.auth-username {
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0 var(--space-2);
+}
+
+.auth-link {
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.auth-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.auth-link-strong {
+  background: #fff;
+  color: var(--nav-bg-strong);
+  border-color: #fff;
+}
+
+.auth-link-strong:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--nav-bg-strong);
+}
+
+.auth-logout {
+  font-family: inherit;
+}
+
+.auth-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}

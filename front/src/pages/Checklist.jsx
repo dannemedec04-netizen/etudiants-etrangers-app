@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { createChecklistItem, getChecklist, setChecklistItemDone } from "../api/admin";
+import { useAuth } from "../context/AuthContext";
 import "./Checklist.css";
 
 const CATEGORIES = [
@@ -9,36 +11,21 @@ const CATEGORIES = [
 ];
 
 export default function Checklist() {
-  const [userId, setUserId] = useState(() => localStorage.getItem("userId") || "");
-  const [userIdInput, setUserIdInput] = useState("");
+  const { isAuthenticated } = useAuth();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [newItem, setNewItem] = useState({ label: "", description: "", category: CATEGORIES[0].value });
 
   useEffect(() => {
-    if (!userId) return;
+    if (!isAuthenticated) return;
     setLoading(true);
     setError(null);
-    getChecklist(userId)
+    getChecklist()
       .then(setItems)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [userId]);
-
-  function handleConnect(e) {
-    e.preventDefault();
-    if (!userIdInput.trim()) return;
-    localStorage.setItem("userId", userIdInput.trim());
-    setUserId(userIdInput.trim());
-  }
-
-  function handleSwitchUser() {
-    localStorage.removeItem("userId");
-    setUserId("");
-    setItems([]);
-    setUserIdInput("");
-  }
+  }, [isAuthenticated]);
 
   async function toggleItem(item) {
     const previous = items;
@@ -57,7 +44,7 @@ export default function Checklist() {
     e.preventDefault();
     if (!newItem.label.trim()) return;
     try {
-      const created = await createChecklistItem(userId, newItem);
+      const created = await createChecklistItem(newItem);
       setItems((current) => [...current, created]);
       setNewItem({ label: "", description: "", category: CATEGORIES[0].value });
     } catch (err) {
@@ -65,25 +52,17 @@ export default function Checklist() {
     }
   }
 
-  if (!userId) {
+  if (!isAuthenticated) {
     return (
       <div className="page">
         <h1>Checklist administrative</h1>
         <p className="subtitle">
-          Cette page n'utilise pas encore de compte connecté : renseignez votre identifiant
-          utilisateur pour accéder à votre checklist (l'authentification arrivera plus tard).
+          Connectez-vous pour accéder à votre checklist personnalisée et suivre vos démarches.
         </p>
-        <form className="card checklist-login" onSubmit={handleConnect}>
-          <label htmlFor="userId">Identifiant utilisateur</label>
-          <input
-            id="userId"
-            type="text"
-            placeholder="ex: fda3e6db-4f77-428e-a390-802a3de19b31"
-            value={userIdInput}
-            onChange={(e) => setUserIdInput(e.target.value)}
-          />
-          <button type="submit" className="btn">Accéder à ma checklist</button>
-        </form>
+        <div className="card checklist-login">
+          <Link to="/connexion" className="btn">Se connecter</Link>
+          <Link to="/inscription" className="btn btn-outline">Créer un compte</Link>
+        </div>
       </div>
     );
   }
@@ -95,15 +74,8 @@ export default function Checklist() {
 
   return (
     <div className="page">
-      <div className="checklist-header">
-        <div>
-          <h1>Checklist administrative</h1>
-          <p className="subtitle">Suivez vos démarches et cochez-les au fur et à mesure.</p>
-        </div>
-        <button type="button" className="btn btn-outline" onClick={handleSwitchUser}>
-          Changer d'utilisateur
-        </button>
-      </div>
+      <h1>Checklist administrative</h1>
+      <p className="subtitle">Suivez vos démarches et cochez-les au fur et à mesure.</p>
 
       {error && <div className="error-banner">{error}</div>}
       {loading && <p>Chargement...</p>}

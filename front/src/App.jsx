@@ -6,6 +6,8 @@ import Offers from "./pages/Offers";
 import Checklist from "./pages/Checklist";
 import Aids from "./pages/Aids";
 import Chat from "./pages/Chat";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/checklist" element={<Checklist />} />
         <Route path="/aides" element={<Aids />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/inscription" element={<Register />} />
+        <Route path="/connexion" element={<Login />} />
       </Route>
     </Routes>
   );

@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "./Layout.css";
 
 const LINKS = [
@@ -11,6 +12,14 @@ const LINKS = [
 ];
 
 export default function Layout() {
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate("/");
+  }
+
   return (
     <>
       <header className="topbar">
@@ -33,6 +42,21 @@ export default function Layout() {
               </NavLink>
             ))}
           </nav>
+          <div className="auth-section">
+            {isAuthenticated ? (
+              <>
+                <span className="auth-username">{user.firstName}</span>
+                <button type="button" className="auth-link auth-logout" onClick={handleLogout}>
+                  Déconnexion
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink to="/connexion" className="auth-link">Connexion</NavLink>
+                <NavLink to="/inscription" className="auth-link auth-link-strong">Inscription</NavLink>
+              </>
+            )}
+          </div>
         </div>
       </header>
       <Outlet />

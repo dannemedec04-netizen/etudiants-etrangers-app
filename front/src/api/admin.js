@@ -1,11 +1,11 @@
 import { get, patch, post } from "./client";
 
-export function getChecklist(userId) {
-  return get(`/admin/checklist/${userId}`);
+export function getChecklist() {
+  return get(`/admin/checklist`);
 }
 
-export function createChecklistItem(userId, data) {
-  return post(`/admin/checklist/${userId}`, data);
+export function createChecklistItem(data) {
+  return post(`/admin/checklist`, data);
 }
 
 export function setChecklistItemDone(itemId, done) {
