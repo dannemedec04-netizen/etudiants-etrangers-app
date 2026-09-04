@@ -1,6 +1,6 @@
 # Résumé technique du projet — Étudiants Étrangers
 
-Ce document sert de base factuelle pour la rédaction du rapport de projet. Il décrit l'état réel du code au moment de la rédaction (dernier commit poussé : `b6dc1df` ; l'ensemble du système d'authentification décrit ci-dessous est écrit et testé mais **pas encore commité** — voir §10).
+Ce document sert de base factuelle pour la rédaction du rapport de projet. Il décrit l'état réel du code au moment de la rédaction (dernier commit poussé : `595a671`). Le projet est **déployé et fonctionnel en production** — voir §11.
 
 ---
 
@@ -14,7 +14,7 @@ Ce document sert de base factuelle pour la rédaction du rapport de projet. Il d
 
 **Délai** : projet réalisé sur un délai d'un mois. Premier commit le 15/08/2026, développement actif du 19/08/2026 au 04/09/2026 (voir §9 pour le détail chronologique).
 
-**Stade actuel** : MVP fonctionnel de bout en bout (recherche de formations, authentification réelle, checklist interactive liée au compte, aides, chatbot, liens vers offres externes).
+**Stade actuel** : MVP fonctionnel de bout en bout (recherche de formations, authentification réelle, checklist interactive liée au compte, aides, chatbot, liens vers offres externes), **déployé et vérifié en production** (Neon + Render + Vercel — voir §11).
 
 ---
 
@@ -353,13 +353,59 @@ SVG custom (`front/public/favicon.svg`, utilisé à la fois comme favicon et com
 - 9 routes API back-end fonctionnelles
 - 8 pages front-end (dont Register/Login), navbar avec état de connexion
 - Design system cohérent (palette, typographie, logo), light/dark mode
-- Chatbot fonctionnel de bout en bout (nécessite une clé API Anthropic valide dans `back/.env`)
+- Chatbot fonctionnel de bout en bout
 - Parcours d'authentification testé manuellement dans un navigateur réel : inscription → redirection checklist → ajout d'étape → déconnexion → checklist inaccessible → reconnexion → donnée retrouvée. Testé aussi côté API : doublon d'email (409), mauvais mot de passe (401), accès sans token (401)
+- **Déploiement en production** (Neon + Render + Vercel), vérifié fonctionnalité par fonctionnalité — voir §11
 
 ### Reste à faire
-- **Commit et push** : tout le travail d'authentification (backend, frontend, migration) ainsi que ce document sont écrits et testés mais **pas encore commités** sur `origin/main`
-- **Déploiement** : le projet tourne uniquement en local à ce stade — aucun hébergement configuré (backend, frontend, base de données managée, variables d'environnement de production dont un nouveau `JWT_SECRET` à générer pour la prod)
 - **Tests automatisés** : aucun test unitaire ou d'intégration n'a été écrit ; toutes les vérifications ont été faites manuellement (navigateur, `curl`)
 - **Révocation de token** : pas de mécanisme pour invalider un JWT avant son expiration (7 jours) — acceptable pour le MVP, à mentionner comme limite connue
 - **Vérification des URLs saisies "de mémoire"** : certaines URLs du seed (sites des écoles, pages carrière d'entreprises) n'ont pas toutes été revérifiées en direct
+- **Cold start Render** : sur le plan gratuit, le backend s'endort après une période d'inactivité et met 30-50s à répondre à la première requête suivante — acceptable pour une démo, à surveiller si le trafic augmente
 - **Rapport de projet** : ce document sert de base ; reste à rédiger le rapport final (démarche, difficultés rencontrées, captures d'écran, bilan)
+
+---
+
+## 11. Déploiement en production
+
+### Base de données — Neon
+Instance PostgreSQL managée hébergée chez **Neon**. Le schéma et les migrations ont été appliqués avec `prisma migrate deploy`, puis la base a été peuplée avec `prisma db seed` (mêmes données que la seed locale : 12 écoles, 29 formations, 12 aides, 1 utilisateur démo). Connexion en TLS (`sslmode=require`, imposé par Neon). Identifiants de connexion non documentés ici — stockés uniquement dans la variable `DATABASE_URL` de Render.
+
+### Back-end — Render
+- **URL** : https://etudiants-etrangers-app.onrender.com
+- **Build Command** : `npm install && npx prisma migrate deploy`
+- **Start Command** : `npm start`
+- **Variables d'environnement configurées** (noms uniquement, valeurs non documentées ici) :
+  - `DATABASE_URL` — chaîne de connexion Neon
+  - `ANTHROPIC_API_KEY` — clé de l'API Claude
+  - `JWT_SECRET` — secret de signature des tokens, généré spécifiquement pour la production (différent de celui utilisé en local)
+  - `CORS_ORIGIN` — restreint les origines autorisées à l'URL Vercel du front (voir plus bas)
+  - `PORT` — injectée automatiquement par Render, non définie manuellement
+
+### Front-end — Vercel
+- **URL** : https://etudiants-etrangers-app.vercel.app
+- **Root Directory** : `front`, build Vite standard (`vite build`, dossier `dist`)
+- **Variable d'environnement** : `VITE_API_URL` = `https://etudiants-etrangers-app.onrender.com/api`
+
+### CORS entre les deux
+Le front (Vercel) et le back (Render) sont sur des domaines différents, donc chaque appel `fetch` du front vers l'API est une requête cross-origin. Le back autorise cela via le middleware `cors` (`back/src/app.js`), configuré avec la variable `CORS_ORIGIN` pointant explicitement vers l'URL Vercel — seul ce domaine est autorisé à appeler l'API en production (contre `origin: true`, permissif, utilisé par défaut quand `CORS_ORIGIN` est absent, ce qui reste le comportement en local).
+
+### Vérification de bout en bout (confirmé fonctionnel)
+Le site a été testé directement en production, dans un navigateur réel, page par page :
+
+| Élément vérifié | Résultat |
+|---|---|
+| `GET /health` (Render) | ✅ `{"status":"ok"}` |
+| Lecture de données réelles via Neon (`/api/education/formations`) | ✅ 29 formations retournées |
+| Chargement direct de sous-routes React (`/formations`, `/connexion`...) | ✅ (après correctif, voir ci-dessous) |
+| Inscription puis connexion (compte démo du seed) | ✅ JWT émis et vérifié, navbar met à jour l'état connecté |
+| Checklist protégée par JWT | ✅ données de l'utilisateur connecté chargées et modifiables |
+| Aides, formations, offres (liens externes) | ✅ |
+| Chatbot (`POST /api/chatbot/message`) | ✅ (après correctif, voir ci-dessous) |
+
+### Deux incidents trouvés et corrigés pendant cette vérification
+Utile à documenter dans le rapport : deux problèmes réels ont été détectés en testant le déploiement, ni l'un ni l'autre visibles en local.
+
+1. **404 sur toute route chargée directement ou rafraîchie** (`commit 5042fe1`). Vercel sert un site statique et ne savait pas retomber sur `index.html` pour les routes gérées côté client par React Router — un lien direct vers `/formations` ou un F5 sur une page renvoyait la 404 générique de Vercel au lieu de l'application. Corrigé par l'ajout de `front/vercel.json` avec une règle de réécriture (`rewrites`) qui redirige toute route vers `index.html`.
+
+2. **Erreur 401 sur le chatbot en production** (`commit 595a671`). La route chatbot n'avait aucun `try/catch` autour de l'appel à l'API Anthropic : quand `ANTHROPIC_API_KEY` était invalide côté Render, le SDK levait une erreur avec `status: 401` qui remontait telle quelle jusqu'au client (page d'erreur HTML brute d'Express, sans JSON exploitable). Après correction de la clé sur Render, et ajout d'un `try/catch` renvoyant une erreur JSON propre (`502`) en cas de problème futur avec l'API Anthropic, le chatbot répond correctement.
