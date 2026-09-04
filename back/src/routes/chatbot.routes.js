@@ -18,16 +18,21 @@ router.post("/message", async (req, res) => {
     return res.status(400).json({ error: "messages est requis" });
   }
 
-  const response = await client.messages.create({
-    model: "claude-opus-5",
-    max_tokens: 1024,
-    system: SYSTEM_PROMPT,
-    messages,
-  });
+  try {
+    const response = await client.messages.create({
+      model: "claude-opus-5",
+      max_tokens: 1024,
+      system: SYSTEM_PROMPT,
+      messages,
+    });
 
-  const textBlock = response.content.find((block) => block.type === "text");
+    const textBlock = response.content.find((block) => block.type === "text");
 
-  res.json({ reply: textBlock ? textBlock.text : "" });
+    res.json({ reply: textBlock ? textBlock.text : "" });
+  } catch (error) {
+    console.error("Erreur chatbot:", error);
+    res.status(502).json({ error: "Le service de chat est momentanement indisponible" });
+  }
 });
 
 module.exports = router;

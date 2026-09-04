@@ -8,7 +8,10 @@ const chatbotRoutes = require("./routes/chatbot.routes");
 
 const app = express();
 
-app.use(cors());
+// CORS_ORIGIN : liste d'origines separees par des virgules (ex: https://mon-app.vercel.app).
+// Si absent (dev local), on autorise toutes les origines.
+const allowedOrigins = process.env.CORS_ORIGIN?.split(",").map((origin) => origin.trim());
+app.use(cors({ origin: allowedOrigins && allowedOrigins.length > 0 ? allowedOrigins : true }));
 app.use(express.json());
 
 app.get("/health", (req, res) => {
