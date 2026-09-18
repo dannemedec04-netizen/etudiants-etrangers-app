@@ -6,6 +6,7 @@ const CATEGORIES = [
   { value: "bourse", label: "Bourse" },
   { value: "sante", label: "Santé" },
   { value: "transport", label: "Transport" },
+  { value: "titre_de_sejour", label: "Titre de séjour" },
 ];
 
 export default function Aids() {

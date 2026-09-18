@@ -372,6 +372,15 @@ async function main() {
         amount: "Jusqu'a 12 seances gratuites par annee universitaire",
         url: "https://www.santepsy.etudiant.gouv.fr",
       },
+      {
+        name: "Renouvellement du titre de sejour",
+        provider: "Prefecture",
+        category: "titre_de_sejour",
+        description: "Demarche a effectuer avant l'expiration du titre de sejour pour continuer a etudier legalement en France.",
+        eligibility: "Etudiant etranger dont le titre de sejour arrive a expiration, demarche a anticiper 2 a 4 mois avant.",
+        amount: "Timbre fiscal, montant variable selon le type de titre",
+        url: "https://administration-etrangers-en-france.interieur.gouv.fr",
+      },
     ],
   });
 
@@ -411,7 +420,7 @@ async function main() {
   });
 
   console.log(
-    `Seed termine : ${schoolDefs.length} ecoles, 29 formations, 12 aides, 1 utilisateur demo avec 3 etapes de checklist.`
+    `Seed termine : ${schoolDefs.length} ecoles, 29 formations, 13 aides, 1 utilisateur demo avec 3 etapes de checklist.`
   );
 }
 

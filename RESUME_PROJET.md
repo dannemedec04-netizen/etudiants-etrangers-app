@@ -348,7 +348,7 @@ SVG custom (`front/public/favicon.svg`, utilisé à la fois comme favicon et com
 
 ### Fait et testé
 - Schéma de données complet (5 modèles), 7 migrations
-- Script de seed réaliste : 12 écoles, 29 formations, 12 aides, 1 utilisateur démo avec mot de passe hashé et 3 étapes de checklist
+- Script de seed réaliste : 12 écoles, 29 formations, 13 aides, 1 utilisateur démo avec mot de passe hashé et 3 étapes de checklist
 - **Authentification complète** : inscription, connexion, hashage bcrypt, JWT, middleware de protection, isolation des données entre utilisateurs
 - 9 routes API back-end fonctionnelles
 - 8 pages front-end (dont Register/Login), navbar avec état de connexion
@@ -369,7 +369,7 @@ SVG custom (`front/public/favicon.svg`, utilisé à la fois comme favicon et com
 ## 11. Déploiement en production
 
 ### Base de données — Neon
-Instance PostgreSQL managée hébergée chez **Neon**. Le schéma et les migrations ont été appliqués avec `prisma migrate deploy`, puis la base a été peuplée avec `prisma db seed` (mêmes données que la seed locale : 12 écoles, 29 formations, 12 aides, 1 utilisateur démo). Connexion en TLS (`sslmode=require`, imposé par Neon). Identifiants de connexion non documentés ici — stockés uniquement dans la variable `DATABASE_URL` de Render.
+Instance PostgreSQL managée hébergée chez **Neon**. Le schéma et les migrations ont été appliqués avec `prisma migrate deploy`, puis la base a été peuplée avec `prisma db seed` (mêmes données que la seed locale : 12 écoles, 29 formations, 13 aides, 1 utilisateur démo). Connexion en TLS (`sslmode=require`, imposé par Neon). Identifiants de connexion non documentés ici — stockés uniquement dans la variable `DATABASE_URL` de Render.
 
 ### Back-end — Render
 - **URL** : https://etudiants-etrangers-app.onrender.com
